@@ -20,7 +20,7 @@ const Header = () => {
 			<Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
 				<Container>
 					<LinkContainer to="/">
-						<Navbar.Brand>ProShop</Navbar.Brand>
+						<Navbar.Brand href="#">ProShop</Navbar.Brand>
 					</LinkContainer>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
@@ -54,7 +54,7 @@ const Header = () => {
 										<NavDropdown.Item>Users</NavDropdown.Item>
 									</LinkContainer>
 									<LinkContainer to="/admin/productlist">
-										<NavDropdown.Item>Products</NavDropdown.Item>
+										<NavDropdown.Item>Books</NavDropdown.Item>
 									</LinkContainer>
 									<LinkContainer to="/admin/orderlist">
 										<NavDropdown.Item>Orders</NavDropdown.Item>
