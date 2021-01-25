@@ -5,49 +5,45 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Paginate from "../components/Paginate";
 import { Table, Button, Row, Col } from "react-bootstrap";
-import {
-	listProducts,
-	deleteProduct,
-	createProduct,
-} from "../actions/productActions";
-import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
+import { listBooks, deleteBook, createBook } from "../actions/bookActions";
+import { BOOK_CREATE_RESET } from "../constants/bookConstants";
 
-const ProductListScreen = ({ history, match }) => {
+const BookListScreen = ({ history, match }) => {
 	const pageNumber = match.params.pageNumber || 1;
 	const dispatch = useDispatch();
 
-	const productList = useSelector((state) => state.productList);
-	const { loading, error, products, page, pages } = productList;
+	const bookList = useSelector((state) => state.bookList);
+	const { loading, error, books, page, pages } = bookList;
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
-	const productDelete = useSelector((state) => state.productDelete);
+	const bookDelete = useSelector((state) => state.bookDelete);
 	const {
 		loading: loadingDelete,
 		error: errorDelete,
 		success: successDelete,
-	} = productDelete;
+	} = bookDelete;
 
-	const productCreate = useSelector((state) => state.productCreate);
+	const bookCreate = useSelector((state) => state.bookCreate);
 	const {
 		loading: loadingCreate,
 		error: errorCreate,
 		success: successCreate,
-		product: createdProduct,
-	} = productCreate;
+		book: createdBook,
+	} = bookCreate;
 
 	useEffect(() => {
-		dispatch({ type: PRODUCT_CREATE_RESET });
+		dispatch({ type: BOOK_CREATE_RESET });
 
 		if (!userInfo.isAdmin) {
 			history.push("/login");
 		}
 
 		if (successCreate) {
-			history.push(`/admin/product/${createdProduct._id}/edit`);
+			history.push(`/admin/book/${createdBook._id}/edit`);
 		} else {
-			dispatch(listProducts("", pageNumber));
+			dispatch(listBooks("", pageNumber));
 		}
 	}, [
 		dispatch,
@@ -55,17 +51,17 @@ const ProductListScreen = ({ history, match }) => {
 		userInfo,
 		successDelete,
 		successCreate,
-		createdProduct,
+		createdBook,
 		pageNumber,
 	]);
 
-	const createProductHandler = () => {
-		dispatch(createProduct());
+	const createBookHandler = () => {
+		dispatch(createBook());
 	};
 
 	const deleteHandler = (id) => {
 		if (window.confirm("Are you sure?")) {
-			dispatch(deleteProduct(id));
+			dispatch(deleteBook(id));
 		}
 	};
 
@@ -73,11 +69,11 @@ const ProductListScreen = ({ history, match }) => {
 		<>
 			<Row className="align-items-center">
 				<Col>
-					<h1> Products </h1>
+					<h1> Books </h1>
 				</Col>
 				<Col className="text-right">
-					<Button className="my-3" onClick={createProductHandler}>
-						<i className="fas fa-plus"></i> Create Product
+					<Button className="my-3" onClick={createBookHandler}>
+						<i className="fas fa-plus"></i> Create Book
 					</Button>
 				</Col>
 			</Row>
@@ -103,15 +99,15 @@ const ProductListScreen = ({ history, match }) => {
 							</tr>
 						</thead>
 						<tbody>
-							{products.map((product) => (
-								<tr key={product._id}>
-									<td>{product._id}</td>
-									<td>{product.name}</td>
-									<td>${product.price}</td>
-									<td>{product.genre}</td>
-									<td>{product.author}</td>
+							{books.map((book) => (
+								<tr key={book._id}>
+									<td>{book._id}</td>
+									<td>{book.name}</td>
+									<td>${book.price}</td>
+									<td>{book.genre}</td>
+									<td>{book.author}</td>
 									<td>
-										<LinkContainer to={`/admin/product/${product._id}/edit`}>
+										<LinkContainer to={`/admin/book/${book._id}/edit`}>
 											<Button variant="light" className="btn-sm">
 												<i className="fas fa-edit"></i>
 											</Button>
@@ -119,7 +115,7 @@ const ProductListScreen = ({ history, match }) => {
 										<Button
 											variant="danger"
 											className="btn-sm"
-											onClick={() => deleteHandler(product._id)}
+											onClick={() => deleteHandler(book._id)}
 										>
 											<i className="fas fa-trash"></i>
 										</Button>
@@ -135,4 +131,4 @@ const ProductListScreen = ({ history, match }) => {
 	);
 };
 
-export default ProductListScreen;
+export default BookListScreen;

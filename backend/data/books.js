@@ -1,4 +1,4 @@
-const products = [
+const books = [
 	{
 		name: "The Presidential Years 2012-2017",
 		image: "/images/presentyears.jpg",
@@ -13,4 +13,4 @@ const products = [
 	},
 ];
 
-export default products;
+export default books;

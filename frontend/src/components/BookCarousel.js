@@ -4,14 +4,14 @@ import { Carousel, Image } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "./Loader";
 import Message from "./Message";
-import { listTopProducts } from "../actions/productActions";
-const ProductCarousel = () => {
+import { listTopBooks } from "../actions/bookActions";
+const BookCarousel = () => {
 	const dispatch = useDispatch();
-	const productTopRated = useSelector((state) => state.productTopRated);
-	const { loading, error, products } = productTopRated;
+	const bookTopRated = useSelector((state) => state.bookTopRated);
+	const { loading, error, books } = bookTopRated;
 
 	useEffect(() => {
-		dispatch(listTopProducts());
+		dispatch(listTopBooks());
 	}, [dispatch]);
 
 	return loading ? (
@@ -20,13 +20,13 @@ const ProductCarousel = () => {
 		<Message variant="danger">{error}</Message>
 	) : (
 		<Carousel pause="hover" className="bg-dark">
-			{products.map((product) => (
-				<Carousel.Item key={product._id}>
-					<Link to={`/product/${product._id}`}>
-						<Image src={product.image} alt={product.name} fluid />
+			{books.map((book) => (
+				<Carousel.Item key={book._id}>
+					<Link to={`/book/${book._id}`}>
+						<Image src={book.image} alt={book.name} fluid />
 						<Carousel.Caption className="carousel-caption">
 							<h2>
-								{product.name} ({product.price})
+								{book.name} ({book.price})
 							</h2>
 						</Carousel.Caption>
 					</Link>
@@ -36,4 +36,4 @@ const ProductCarousel = () => {
 	);
 };
 
-export default ProductCarousel;
+export default BookCarousel;
